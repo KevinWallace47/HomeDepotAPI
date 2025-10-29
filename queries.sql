@@ -73,12 +73,14 @@ ORDER BY avg_price DESC
 -- Compare ratings between discounted items and non discounted ones
 SELECT
   brand,
-  ROUND(AVG(CASE WHEN price_was IS NOT NULL THEN price_was END)::numeric, 2) AS discount_false,
-  ROUND(AVG(CASE WHEN price_was IS NOT NULL THEN price END)::numeric, 2) AS discount_true,
-  ROUND(AVG(rating)::numeric, 2) AS avg_rating
+  ROUND(AVG(CASE WHEN price_was IS NOT NULL THEN price END)::numeric, 2) AS avg_price_discount,
+  ROUND(AVG(CASE WHEN price_was IS NOT NULL THEN rating END)::numeric, 2) AS discount_rating,
+  ROUND(AVG(CASE WHEN price_was IS NULL THEN price END)::numeric, 2) AS avg_price_no_discount,
+  ROUND(AVG(CASE WHEN price_was IS NULL THEN rating END)::numeric, 2) AS no_discount_rating
 FROM products
 GROUP BY brand
 ORDER BY brand;
+
 
 
 
